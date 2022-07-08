@@ -8,4 +8,4 @@ Here I will upload the typical noob scripts someone writes while they are learni
 
 I will also use this repository to get a hold of how git works. 2x1!
 
-Any suggestion, any piece of advice and some tips&tricks are more than welcome!
+Any suggestion/s, any piece of advice and some tips&tricks are more than welcome!
