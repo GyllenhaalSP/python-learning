@@ -12,7 +12,7 @@ while True:  # Bucle principal
     print(f'{ganadas} Ganadas, {perdidas} Perdidas, {empates} Empates\n')
     while True:  # Bucle de datos
         jugador = input('Introduce tu siguiente movimiento: Piedra'
-                        '- Papel - Tijeras o Salir \n').lower()  # Añadido lower() para normalizar el input
+                        ' - Papel - Tijeras o Salir \n').lower()  # Añadido lower() para normalizar el input
 
         if jugador == 'salir':
             sys.exit()  # Acabar el juego
