@@ -1,7 +1,9 @@
 import random
 import sys
+import time
+from art import *
 
-print('PIEDRA, PAPEL, TIJERAS\n')
+print(logo)
 
 # Variables para llevar las puntuaciones
 ganadas = 0
@@ -22,24 +24,35 @@ while True:  # Bucle principal
 
     # Mostrar la jugada del jugador
     if jugador == 'piedra':
-        print('PIEDRA contra...')
+        print('\nPIEDRA contra...')
+        print(piedra)
+        print(versus)
     elif jugador == 'papel':
-        print('PAPEL contra...')
+        print('\nPAPEL contra...')
+        print(papel)
+        print(versus)
     elif jugador == 'tijeras':
-        print('TIJERAS contra...')
+        print('\nTIJERAS contra...')
+        print(tijeras)
+        print(versus)
+
+    time.sleep(2)
 
     # Mostrar la jugada del ordenador
     numeroAleatorio = random.randint(1, 3)
     ordenador = ""
     if numeroAleatorio == 1:
         ordenador = 'piedra'
-        print('PIEDRA')
+        print(piedra)
+        print('PIEDRA\n')
     if numeroAleatorio == 2:
         ordenador = 'papel'
-        print('PAPEL')
+        print(papel)
+        print('PAPEL\n')
     if numeroAleatorio == 3:
         ordenador = 'tijeras'
-        print('TIJERAS')
+        print(tijeras)
+        print('TIJERAS\n')
 
     # Mostrar y guardar la racha de ganadas, perdidas y empates
     if jugador == ordenador:
