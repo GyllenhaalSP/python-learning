@@ -1,6 +1,16 @@
+import os
 import sys
 import time
 from art import header, demon, hammer, bathroom, front_door
+
+
+def clear():
+    """
+    Clear the console window
+    """
+    if os.name == 'nt':
+        _ = os.system('cls')
+
 
 while True:
     print(header)
@@ -32,10 +42,14 @@ while True:
                     break
             if choice1.lower() == ('si' or 'sí'):
                 print('\n"Sí, es mejor investigar un poco..."\n')
+                time.sleep(3)
+                clear()
                 break
 
         if choice1.lower() == 'salir':
             print('\n"Venga, vamos a ver qué hay por ahí..."\n')
+            time.sleep(3)
+            clear()
             break
 
     time.sleep(3)
@@ -51,6 +65,7 @@ while True:
     choice2 = input('¿Entrar o Seguir por el pasillo?\n')
 
     if choice2.lower() == 'entrar':
+        clear()
         print(demon)
         time.sleep(4)
         print('"Hasta luego Lucas..."\n')
@@ -59,6 +74,7 @@ while True:
         time.sleep(3)
         print('\n"¡MÁS SUERTE LA PRÓXIMA VEZ!"\n')
         time.sleep(5)
+        clear()
         continue
 
     elif choice2.lower() == 'seguir':
@@ -77,6 +93,7 @@ while True:
                     '¿Sí o No?\n')
 
     if choice3.lower() == ('si' or 'sí'):
+        clear()
         print(bathroom)
         time.sleep(3)
         print('"Madre mía, qué puto asco."\n')
@@ -87,8 +104,10 @@ while True:
         time.sleep(2)
         print('"Voy a volver al pasillo y a seguir investigando."\n')
         time.sleep(10)
+        clear()
 
     elif choice3.lower() == 'no':
+        clear()
         pass
 
     print('\n"La verdad es que es muy largo el pasillo."')
@@ -101,6 +120,7 @@ while True:
     time.sleep(3)
     print('Llegas a un recibidor.')
     time.sleep(5)
+    clear()
     print(front_door)
     time.sleep(5)
     print('¿¡Es esa la puerta principal!?\n')
@@ -108,6 +128,7 @@ while True:
 
     while True:
         if choice4.lower() == 'no':
+            clear()
             print('\n¿¡En serio te vas a quedar aquí!?', end=" ")
             time.sleep(2)
             choice4 = input('A ver, sales, ¿¡no!? ¿Sí o No?\n')
@@ -117,17 +138,21 @@ while True:
                     time.sleep(3)
                     choice4 = input('Va, vamos a centrarnos. Quieres salir, ¿verdad?,'
                                     ' ¿Sí o No?\n')
-                    if choice4 == ('si' or 'sí'):
+                    if choice4.lower() == ('si' or 'sí'):
+                        clear()
                         break
-                    if choice4 == 'no':
+                    if choice4.lower() == 'no':
                         continue
                 elif choice4.lower() == ('si' or 'sí'):
+                    clear()
                     break
             if choice4.lower() == ('si' or 'sí'):
+                clear()
                 print('\nGracias a Dios. Ya estás fuera. Enhorabuena.\n')
                 break
 
         if choice4.lower() == ('si' or 'sí'):
+            clear()
             print('\n"Gracias a Dios. Ya estás fuera. Enhorabuena."\n')
             break
 
@@ -140,6 +165,7 @@ while True:
     time.sleep(3)
     print('¡Disfruta de tu libertad!\n')
     time.sleep(7)
+    clear()
     break
 
 sys.exit('FIN')
