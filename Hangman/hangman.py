@@ -33,6 +33,14 @@ for letter in chosen_word:
 while '_' in display:
 
     guess = input('Guess a letter, please: ').lower()
+
+    while True:
+        if not guess:
+            guess = input('Nothing was inputted, please input a letter: ').lower()
+            continue
+        else:
+            break
+
     clear()
 
     while True:
