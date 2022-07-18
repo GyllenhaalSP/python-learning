@@ -30,21 +30,27 @@ def divide(n1, n2):
     return n1 / n2
 
 
-def calculator():
+def menu_formatting():
     """
-    Doesn't take any arguments. Simply used for recursion.
+    Formats the output of the 'for' loop containing the operation symbols.
     """
-    title = ' CALCULATOR '
-    print(f'{title.center(110, "*")}')
-    print(header)
-    num1 = input('What\'s the first number?: ')
     print('')
     print('[', end='')
     print('] ['.join([symbol for symbol in symbols]), end='')
     print(']')
     print('')
+
+
+def calculator():
+    """
+    Doesn't take any arguments. Simply used for recursion.
+    """
+    print(f'{" CALCULATOR ".center(104, "*")}')
+    print(header)
+    num1 = float(input('What\'s the first number?: '))
+    menu_formatting()
     operation = input('Pick an operation from the line above: ')
-    num2 = input('\nWhat\'s the next number?: ')
+    num2 = float(input('\nWhat\'s the next number?: '))
     calculation = symbols[operation]
     result = calculation(num1, num2)
     print(f'\n{num1} {operation} {num2} = {result}\n')
@@ -63,13 +69,9 @@ def calculator():
                 continue
     else:
         while True:
-            print('')
-            print('[', end='')
-            print('] ['.join([symbol for symbol in symbols]), end='')
-            print(']')
-            print('')
+            menu_formatting()
             operation = input('Pick another operation: ')
-            num3 = input('\nWhat\'s the next number?: ')
+            num3 = float(input('\nWhat\'s the next number?: '))
             print('')
             calculation = symbols[operation]
             result2 = calculation(result, num3)
@@ -94,5 +96,7 @@ symbols = {
         '*':   multiply,
         '/':   divide,
 }
+
+operations = ['+', '-', '*', '/', 'mod', '^', '%']
 
 calculator()
