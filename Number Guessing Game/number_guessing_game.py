@@ -1,6 +1,8 @@
+"""
+Guess the number game. By GyllenhaalSP @ https://github.com/GyllenhaalSP.
+"""
 import os
 import random
-import sys
 import time
 from art import *
 
@@ -17,7 +19,7 @@ def clear():
 
 def lives(amount):
     """
-    Calculate remaining lives and assign unicode hearts from art file accordingly.
+    Calculate remaining lives and assign unicode hearts/broken hearts from art file accordingly.
     """
     hearts = heart * amount
     if amount == 0:
@@ -32,9 +34,11 @@ def game():
     clear()
     print(header)
     print('Welcome to the Number Guessing Game!\n')
-    print(f'Easy mode gives you {heart * 10} lives. \n'
-          f'Hard mode gives you {heart * 5} lives and wipes the previous screen.\n'
-          f'Extra Hard mode gives you {heart * 3} lives and wipes your previous guesses.\n')
+    print(f'EASY mode gives you {heart * 10} lives. \n'
+          f'HARD mode gives you {heart * 5} lives and wipes the previous screen.\n'
+          f'EXTRA HARD mode gives you {heart * 3} lives and wipes your previous guesses.\n')
+    print('Computer says:\n'
+          '         I\'m thinking (do we think?) of a number between 1 and 100.\n')
     difficulty = input('Choose a difficulty. Type "easy", "hard" or "extra-hard": ').lower()
 
     while True:
@@ -54,7 +58,6 @@ def game():
             difficulty = input('Invalid input. Please type "easy", "hard" or "extra-hard": ').lower()
             continue
 
-    print('\nI\'m thinking of a number between 1 and 100.')
     num = random.randint(0, 100)
 
     while True:
@@ -76,7 +79,7 @@ def game():
                 game()
                 break
             elif again in ('n', 'no'):
-                sys.exit('END')
+                quit()
             else:
                 while True:
                     again = input('Invalid input. "y" to play again or "n" to exit: ')
@@ -85,7 +88,7 @@ def game():
                         game()
                         break
                     elif again in ('n', 'no'):
-                        sys.exit('END')
+                        quit()
                     continue
         elif play > num:
             print('Too high.')
@@ -117,14 +120,14 @@ def game():
             continue
         elif play == num:
             print('Congrats! You got it!')
-            print(f'You had {lives(counter)} lives left!\n')
+            print(f'You finished with {lives(counter)} lives left!\n')
             again = input('Do you want to play again? "y" to play or "n" to exit: ')
             if again == 'y':
                 clear()
                 game()
                 break
             else:
-                sys.exit('END')
+                quit()
 
 
 game()
