@@ -1,9 +1,11 @@
+"""
+Piedra, Papel, Tijeras game by GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+"""
 import random
-import sys
 import time
 from art import *
 
-print(logo)
+print(header)
 
 # Variables para llevar las puntuaciones
 ganadas = 0
@@ -17,7 +19,7 @@ while True:  # Bucle principal
                         ' - Papel - Tijeras o Salir \n').lower()  # Añadido lower() para normalizar el input
 
         if jugador == 'salir':
-            sys.exit()  # Acabar el juego
+            quit()
         if jugador == 'piedra' or jugador == 'papel' or jugador == 'tijeras':
             break  # Sale del bucle de datos
         print('Introduce Piedra, Papel, Tijeras o Salir\n')
