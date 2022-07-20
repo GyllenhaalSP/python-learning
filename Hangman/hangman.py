@@ -1,7 +1,9 @@
+"""
+Hangman game by GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+"""
 import random
 import os
-from hangman_stages import *
-from hangman_words import *
+from art import header_en, HANGMANPICS
 
 
 def clear():
@@ -12,15 +14,28 @@ def clear():
         _ = os.system('cls')
 
 
-print(hangman_logo)
+def get_word(archive):
+    """
+    Retrieves a word from the word_list.txt file where all the words eligible for the game are stored.
+    """
+    with open(f'{archive}.txt', 'r') as word_list:
+        data = word_list.read()
+        words = data.split()
 
-lives = 7
+    random_word = random.choice(words)
+    word_list.close()
+    return random_word
 
-# Initial gallows
+
+print(header_en)
+# Print initial gallows
 print(f'{HANGMANPICS[7]}\n')
 
-chosen_word = random.choice(word_list)
-print(chosen_word)
+lives = 7
+chosen_word = get_word('word_list')
+
+# Line for debug purposes
+print(f'Debug statement: {chosen_word}')
 
 # Create blanks
 guess = ''
@@ -29,6 +44,8 @@ repeats = []
 
 for letter in chosen_word:
     display.append('_')
+
+print(f'\n{" ".join(display)}\n')
 
 while '_' in display:
 
@@ -77,9 +94,9 @@ while '_' in display:
 
     if lives == 0:
         print(f'{HANGMANPICS[0]}\n')
-        print('You lose!')
+        print('You are hanging from the gallows. You "noose"!')
         break
 
     if '_' not in display:
+        print('The gallows are empty again. You won!')
         print(f'{HANGMANPICS[7]}\n')
-        print('You won!')
