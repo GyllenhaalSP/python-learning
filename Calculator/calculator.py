@@ -1,5 +1,16 @@
-import sys
+"""
+Calculator Program. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+"""
+import os
 from art import header
+
+
+def clear():
+    """
+    Clear the console window
+    """
+    if os.name == 'nt':
+        _ = os.system('cls')
 
 
 def add(n1, n2):
@@ -45,12 +56,20 @@ def calculator():
     """
     Doesn't take any arguments. Simply used for recursion.
     """
+    clear()
     print(f'{" CALCULATOR ".center(104, "*")}')
     print(header)
     num1 = float(input('What\'s the first number?: '))
     menu_formatting()
     operation = input('Pick an operation from the line above: ')
-    num2 = float(input('\nWhat\'s the next number?: '))
+    while True:
+        if operation not in operations:
+            menu_formatting()
+            operation = input('Invalid input. Pick an operation from the line above: ')
+            continue
+        else:
+            break
+    num2 = input('\nWhat\'s the next number?: ')
     calculation = symbols[operation]
     result = calculation(num1, num2)
     print(f'\n{num1} {operation} {num2} = {result}\n')
@@ -60,10 +79,10 @@ def calculator():
             choice = input('Do you want to start a new calculation?\n "y" to start a new '
                            'calculator or "n" to exit entirely: ')
             if choice == 'y':
+                clear()
                 calculator()
-                break
             elif choice == 'n':
-                sys.exit('END')
+                quit()
             else:
                 print('\nInvalid input: Please enter "y" or "n".\n')
                 continue
@@ -71,7 +90,14 @@ def calculator():
         while True:
             menu_formatting()
             operation = input('Pick another operation: ')
-            num3 = float(input('\nWhat\'s the next number?: '))
+            while True:
+                if operation not in operations:
+                    menu_formatting()
+                    operation = input('Invalid input. Pick another operation: ')
+                    continue
+                else:
+                    break
+            num3 = input('\nWhat\'s the next number?: ')
             print('')
             calculation = symbols[operation]
             result2 = calculation(result, num3)
@@ -85,9 +111,10 @@ def calculator():
                 print('')
                 if input('Do you want to start a new calculation?\n'
                          ' "y" to start a new calculator or "n" to exit entirely: ') == 'y':
+                    clear()
                     calculator()
                 else:
-                    sys.exit('END')
+                    quit()
 
 
 symbols = {
