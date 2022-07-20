@@ -1,5 +1,7 @@
+"""
+La Mansión Encantada game by GyllenhaalSP @ https://github.com/GyllenhaalSP.
+"""
 import os
-import sys
 import time
 from art import header, demon, hammer, bathroom, front_door
 
@@ -168,4 +170,4 @@ while True:
     clear()
     break
 
-sys.exit('FIN')
+quit()
