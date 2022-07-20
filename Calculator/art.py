@@ -1,3 +1,6 @@
+"""
+The art file for the Calculator Program. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+"""
 header = """_____________________
 |  _________________  |
 | | Pythonista   0. | |  .----------------.  .----------------.  .----------------.  .----------------. 
