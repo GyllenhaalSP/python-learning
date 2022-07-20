@@ -1,3 +1,6 @@
+"""
+The art files for the La Mansión Encantada Game. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+"""
 header = """
                        " L A   M A N S I Ó N    E N C A N T A D A "
 

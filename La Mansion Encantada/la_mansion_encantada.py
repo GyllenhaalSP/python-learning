@@ -1,5 +1,5 @@
 """
-La Mansión Encantada game by GyllenhaalSP @ https://github.com/GyllenhaalSP.
+La Mansión Encantada game by GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
 """
 import os
 import time
