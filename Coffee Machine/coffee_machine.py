@@ -5,7 +5,7 @@ Coffee Machine program. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
 PENNY = 0.01
 NICKEL = 0.05
 DIME = 0.10
-QUARTER = 0.50
+QUARTER = 0.25
 
 MENU = {
     "espresso": {
@@ -43,7 +43,7 @@ resources = {
 
 def check_resources(user_choice):
     """
-    Checks the machine stock against the order
+    Checks the machine stock against the user order.
     """
     if user_choice in ('latte', 'l'):
         if resources['water'] < 200 or resources['milk'] < 150 or resources['coffee'] < 24:
@@ -65,23 +65,15 @@ def check_resources(user_choice):
             return True
 
 
-def ask_for_money():
+def coin_processing():
     """
-    Ask the user for the money they are going to enter and returns a tuple with all the values.
+    Ask for the coins and return the total introduced.
     """
-    pennies = int(input('\nHow many pennies? '))
-    nickels = int(input('How many nickels? '))
-    dimes = int(input('How many dimes? '))
-    quarters = int(input('How many quarters? '))
-
-    return pennies, nickels, dimes, quarters
-
-
-def calculate_money(pennies, nickels, dimes, quarters):
-    """
-    Gets the tuple unpacking values from ask_for_money() and returns the total amount in dollars.
-    """
-    total = (pennies * PENNY) + (nickels * NICKEL) + (dimes * DIME) + (quarters * QUARTER)
+    print('\nPlease, insert coins.')
+    total = int(input('\nHow many pennies? ')) * PENNY
+    total += int(input('How many nickels? ')) * NICKEL
+    total += int(input('How many dimes? ')) * DIME
+    total += int(input('How many quarters? ')) * QUARTER
     return total
 
 
@@ -110,11 +102,13 @@ while True:
 
     if choice in ('espresso', 'e'):
         if check_resources(choice):
-            pennies, nickels, dimes, quarters = ask_for_money()
-            money_inserted = calculate_money(pennies, nickels, dimes, quarters)
+            money_inserted = coin_processing()
             price = MENU['espresso']['cost']
             if price > money_inserted:
-                print('\nSorry, not enough money inserted. Money refunded.\n')
+                if money_inserted <= 0:
+                    print('\nSorry, not enough money inserted.\n')
+                else:
+                    print('Sorry, not enough money inserted. Money refunded.\n')
                 continue
             elif price <= money_inserted:
                 change = money_inserted - price
@@ -129,11 +123,13 @@ while True:
             continue
     elif choice in ('latte', 'l'):
         if check_resources(choice):
-            pennies, nickels, dimes, quarters = ask_for_money()
-            money_inserted = calculate_money(pennies, nickels, dimes, quarters)
+            money_inserted = coin_processing()
             price = MENU['latte']['cost']
             if price > money_inserted:
-                print('\nSorry, not enough money inserted. Money refunded.\n')
+                if money_inserted <= 0:
+                    print('\nSorry, not enough money inserted.\n')
+                else:
+                    print('Sorry, not enough money inserted. Money refunded.\n')
                 continue
             elif price <= money_inserted:
                 change = money_inserted - price
@@ -148,11 +144,13 @@ while True:
             continue
     elif choice in ('cappuccino', 'c'):
         if check_resources(choice):
-            pennies, nickels, dimes, quarters = ask_for_money()
-            money_inserted = calculate_money(pennies, nickels, dimes, quarters)
+            money_inserted = coin_processing()
             price = MENU['cappuccino']['cost']
             if price > money_inserted:
-                print('\nSorry, not enough money inserted. Money refunded.\n')
+                if money_inserted <= 0:
+                    print('\nSorry, not enough money inserted.\n')
+                else:
+                    print('Sorry, not enough money inserted. Money refunded.\n')
                 continue
             elif price <= money_inserted:
                 change = money_inserted - price
