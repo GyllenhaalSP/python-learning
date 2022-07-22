@@ -1,5 +1,5 @@
 """
-The art files for the hangman game. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+The art files for the Guess the Number game. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
 """
 header = """ #####                                                        #     #                                    ### 
 #     # #    # ######  ####   ####     ##### #    # ######    ##    # #    # #    # #####  ###### #####  ### 

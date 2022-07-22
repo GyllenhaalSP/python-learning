@@ -1,10 +1,10 @@
 """
-Guess the number game. By GyllenhaalSP @ https://github.com/GyllenhaalSP.
+Guess the Number game. By GyllenhaalSP @ https://github.com/GyllenhaalSP.
 """
 import os
 import random
 import time
-from art import *
+from art import header, heart, broken
 
 
 def clear():
@@ -27,9 +27,85 @@ def lives(amount):
     return hearts
 
 
+def set_difficulty(difficulty):
+    """
+    Checks difficulty choice and returns counter. If input is invalid it keeps asking for valid input.
+    """
+    while True:
+        if difficulty in ('easy', 'e'):
+            print('\nDifficulty set to EASY.')
+            counter = 10
+            return counter
+        elif difficulty in ('hard', 'h'):
+            print('\nDifficulty set to HARD.')
+            counter = 5
+            return counter
+        elif difficulty in ('extra', 'extra-hard', 'extra hard', 'ex'):
+            print('\nDifficulty set to EXTRA-HARD.')
+            counter = 3
+            return counter
+        else:
+            difficulty = input('Invalid input. Please type "easy", "hard" or "extra-hard": ').lower()
+            continue
+
+
+def validate_digit(digit):
+    """
+    Validates user input and transforms it to INT or keeps asking for a valid input.
+    """
+    while True:
+        if str.isdecimal(digit):
+            int_digit = int(digit)
+            return int_digit
+        else:
+            digit = input('Invalid input. Please make a numeric guess: ')
+            continue
+
+
+def replay(option):
+    """
+    Checks user answer and routes the replay options. Keeps asking for correct input.
+    """
+    if option in ('y', 'yes'):
+        clear()
+        game()
+    elif option in ('n', 'no'):
+        return
+    else:
+        while True:
+            option = input('Invalid input. "y" to play again or "n" to exit: ')
+            if option in ('y', 'yes'):
+                clear()
+                game()
+            elif option in ('n', 'no'):
+                quit()
+            continue
+
+
+def hard_diff(difficulty, play):
+    """
+    Clears the screen after a 1.25-second delay and shows only the last guessed number.
+    """
+    if difficulty in ('hard', 'h'):
+        time.sleep(1.25)
+        clear()
+        print(f'Your previous number was {play}')
+        return
+
+
+def extra_hard_diff(difficulty):
+    """
+    Clears the screen after a 0.75-second delay and doesn't show any info.
+    """
+    if difficulty in ('extra', 'extra-hard', 'ex'):
+        time.sleep(0.75)
+        clear()
+        return
+
+
 def game():
     """
-    Wrapped code in function for recursion.
+       Wrapped code in function for recursion.
     """
     clear()
     print(header)
@@ -40,94 +116,43 @@ def game():
     print('Computer says:\n'
           '         I\'m thinking (do we think?) of a number between 1 and 100.\n')
     difficulty = input('Choose a difficulty. Type "easy", "hard" or "extra-hard": ').lower()
-
-    while True:
-        if difficulty in ('easy', 'e'):
-            print('\nDifficulty set to EASY.')
-            counter = 10
-            break
-        elif difficulty in ('hard', 'h'):
-            print('\nDifficulty set to HARD.')
-            counter = 5
-            break
-        elif difficulty in ('extra', 'extra-hard', 'extra hard', 'ex'):
-            print('\nDifficulty set to EXTRA-HARD.')
-            counter = 3
-            break
-        else:
-            difficulty = input('Invalid input. Please type "easy", "hard" or "extra-hard": ').lower()
-            continue
-
+    counter = set_difficulty(difficulty)
     num = random.randint(0, 100)
 
     while True:
+        extra_hard_diff(difficulty)
         print(f'\nYou have {lives(counter)} lives remaining.\n')
         play = input('Make a guess: ')
-        while True:
-            if str.isdecimal(play):
-                play = int(play)
-                break
-            else:
-                play = input('Invalid input. Please make a numeric guess: ')
-                continue
+
+        play = validate_digit(play)
+
         if counter < 2:
             print(f'\nYou ran out of lives! {broken}')
             print('I\'m sorry, you lose!\n')
             again = input('Do you want to play again? "y" to play or "n" to exit: ')
-            if again in ('y', 'yes'):
-                clear()
-                game()
-                break
-            elif again in ('n', 'no'):
-                quit()
-            else:
-                while True:
-                    again = input('Invalid input. "y" to play again or "n" to exit: ')
-                    if again in ('y', 'yes'):
-                        clear()
-                        game()
-                        break
-                    elif again in ('n', 'no'):
-                        quit()
-                    continue
+            replay(again)
+
         elif play > num:
             print('Too high.')
             print('Guess Again!')
             counter -= 1
-            if difficulty in ('hard', 'h'):
-                time.sleep(2)
-                clear()
-                print(f'Your previous number was {play}')
-                continue
-            if difficulty in ('extra', 'extra-hard', 'ex'):
-                time.sleep(1)
-                clear()
-                continue
+            hard_diff(difficulty, play)
+            extra_hard_diff(difficulty)
             continue
+
         elif play < num:
             print('Too low.')
             print('Guess again!')
             counter -= 1
-            if difficulty in ('hard', 'h'):
-                time.sleep(2)
-                clear()
-                print(f'Your previous number was {play}')
-                continue
-            if difficulty in ('extra', 'extra-hard', 'ex'):
-                time.sleep(1)
-                clear()
-                continue
+            hard_diff(difficulty, play)
+            extra_hard_diff(difficulty)
             continue
+
         elif play == num:
             print('Congrats! You got it!')
             print(f'You finished with {lives(counter)} lives left!\n')
             again = input('Do you want to play again? "y" to play or "n" to exit: ')
-            if again == 'y':
-                clear()
-                game()
-                break
-            else:
-                quit()
+            replay(again)
 
 
 game()
