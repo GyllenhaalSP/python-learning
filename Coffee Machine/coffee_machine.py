@@ -77,21 +77,21 @@ def coin_processing():
     return total
 
 
-def deduce_resources(choice, price):
+def statistics_final_balance(user_choice, price_paid):
     """
-    Deduces successfully spent resources from choice.
+    Deduces successfully spent resources from choice and updates money won with transaction.
     """
-    if choice in ('espresso', 'e'):
-        resources['money'] += price
+    if user_choice in ('espresso', 'e'):
+        resources['money'] += price_paid
         resources['water'] -= MENU['espresso']['ingredients']['water']
         resources['coffee'] -= MENU['espresso']['ingredients']['coffee']
-    elif choice in ('latte', 'l'):
-        resources['money'] += price
+    elif user_choice in ('latte', 'l'):
+        resources['money'] += price_paid
         resources['water'] -= MENU['latte']['ingredients']['water']
         resources['milk'] -= MENU['latte']['ingredients']['milk']
         resources['coffee'] -= MENU['latte']['ingredients']['coffee']
-    elif choice in ('cappuccino', 'c'):
-        resources['money'] += price
+    elif user_choice in ('cappuccino', 'c'):
+        resources['money'] += price_paid
         resources['water'] -= MENU['cappuccino']['ingredients']['water']
         resources['milk'] -= MENU['cappuccino']['ingredients']['milk']
         resources['coffee'] -= MENU['cappuccino']['ingredients']['coffee']
@@ -106,7 +106,7 @@ while True:
             price = MENU['espresso']['cost']
             if price > money_inserted:
                 if money_inserted <= 0:
-                    print('\nSorry, not enough money inserted.\n')
+                    print('\nSorry, no money inserted.\n')
                 else:
                     print('Sorry, not enough money inserted. Money refunded.\n')
                 continue
@@ -116,7 +116,7 @@ while True:
                     print(f'\nHere is ${change:0.2f} in change.\n')
                 else:
                     print(f'\nNo change.\n')
-                deduce_resources(choice, price)
+                statistics_final_balance(choice, price)
                 print('Here is your espresso. Enjoy!\n')
                 continue
         else:
@@ -127,7 +127,7 @@ while True:
             price = MENU['latte']['cost']
             if price > money_inserted:
                 if money_inserted <= 0:
-                    print('\nSorry, not enough money inserted.\n')
+                    print('\nSorry, no money inserted.\n')
                 else:
                     print('Sorry, not enough money inserted. Money refunded.\n')
                 continue
@@ -137,7 +137,7 @@ while True:
                     print(f'\nHere is ${change:0.2f} in change.\n')
                 else:
                     print(f'\nNo change.\n')
-                deduce_resources(choice, price)
+                statistics_final_balance(choice, price)
                 print('Here is your latte. Enjoy!\n')
                 continue
         else:
@@ -148,7 +148,7 @@ while True:
             price = MENU['cappuccino']['cost']
             if price > money_inserted:
                 if money_inserted <= 0:
-                    print('\nSorry, not enough money inserted.\n')
+                    print('\nSorry, no money inserted.\n')
                 else:
                     print('Sorry, not enough money inserted. Money refunded.\n')
                 continue
@@ -158,7 +158,7 @@ while True:
                     print(f'\nHere is ${change:0.2f} in change.\n')
                 else:
                     print(f'\nNo change.\n')
-                deduce_resources(choice, price)
+                statistics_final_balance(choice, price)
                 print('Here is your cappuccino. Enjoy!\n')
                 continue
         else:
