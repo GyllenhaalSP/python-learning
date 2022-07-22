@@ -1,5 +1,5 @@
 """
-Data for Higher or Lower game. By GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
+Data for Higher or Lower game. By APPBrewery.
 """
 
 data = [
