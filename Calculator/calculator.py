@@ -15,29 +15,73 @@ def clear():
 
 def add(n1, n2):
     """
-    Adds n1 and n2
+    Adds n1 and n2, checking and converting types accordingly.
     """
+    if type(n1) is str:
+        if '.' in n1:
+            n1 = float(n1)
+        else:
+            n1 = int(n1)
+
+    if type(n2) is str:
+        if '.' in n2:
+            n2 = float(n2)
+        else:
+            n2 = int(n2)
     return n1 + n2
 
 
 def subtract(n1, n2):
     """
-    Subtracts n1 from n2
+    Subtracts n1 from n2, checking and converting types accordingly.
     """
+    if type(n1) is str:
+        if '.' in n1:
+            n1 = float(n1)
+        else:
+            n1 = int(n1)
+
+    if type(n2) is str:
+        if '.' in n2:
+            n2 = float(n2)
+        else:
+            n2 = int(n2)
     return n1 - n2
 
 
 def multiply(n1, n2):
     """
-    Multiply n1 for n2
+    Multiply n1 for n2, checking and converting types accordingly.
     """
+    if type(n1) is str:
+        if '.' in n1:
+            n1 = float(n1)
+        else:
+            n1 = int(n1)
+
+    if type(n2) is str:
+        if '.' in n2:
+            n2 = float(n2)
+        else:
+            n2 = int(n2)
     return n1 * n2
 
 
 def divide(n1, n2):
     """
-    Divides n1 by n2
+    Divides n1 by n2, checking and converting types accordingly.
     """
+    if type(n1) is str:
+        if '.' in n1:
+            n1 = float(n1)
+        else:
+            n1 = int(n1)
+
+    if type(n2) is str:
+        if '.' in n2:
+            n2 = float(n2)
+        else:
+            n2 = int(n2)
     return n1 / n2
 
 
@@ -59,7 +103,15 @@ def calculator():
     clear()
     print(f'{" CALCULATOR ".center(104, "*")}')
     print(header)
-    num1 = float(input('What\'s the first number?: '))
+    num1 = input('What\'s the first number?: ')
+    flag = True
+    while flag:
+        for char in num1:
+            if char in valid_inputs:
+                flag = False
+            else:
+                flag = True
+                num1 = input('Invalid input. Please enter a number: ')
     menu_formatting()
     operation = input('Pick an operation from the line above: ')
     while True:
@@ -70,6 +122,14 @@ def calculator():
         else:
             break
     num2 = input('\nWhat\'s the next number?: ')
+    flag = True
+    while flag:
+        for char in num2:
+            if char in valid_inputs:
+                flag = False
+            else:
+                flag = True
+                num2 = input('Invalid input. Please enter a number: ')
     calculation = symbols[operation]
     result = calculation(num1, num2)
     print(f'\n{num1} {operation} {num2} = {result}\n')
@@ -125,5 +185,6 @@ symbols = {
 }
 
 operations = ['+', '-', '*', '/', 'mod', '^', '%']
+valid_inputs = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
 
 calculator()
