@@ -128,7 +128,8 @@ def game():
 
         if counter < 2:
             print(f'\nYou ran out of lives! {broken}')
-            print('I\'m sorry, you lose!\n')
+            print('I\'m sorry, you lose!')
+            print(f'The number was {num}\n')
             again = input('Do you want to play again? "y" to play or "n" to exit: ')
             replay(again)
 
