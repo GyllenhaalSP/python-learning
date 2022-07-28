@@ -98,10 +98,8 @@ def game():
     while input('   Do you want to play again? "Y" or "N": ') in ('yes', 'y'):
         clear()
         game()
-    else:
-        quit()
+    quit()
 
 
 clear()
 game()
-
