@@ -110,7 +110,6 @@ while True:
 
     elif choice3.lower() == 'no':
         clear()
-        pass
 
     print('\n"La verdad es que es muy largo el pasillo."')
     time.sleep(3)
