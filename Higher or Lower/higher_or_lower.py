@@ -22,8 +22,7 @@ def random_contestant():
     Chooses randomly a contestant.
     """
     contestant = random.choice(data)
-    index = data.index(contestant)
-    return index
+    return data.index(contestant)
 
 
 def repeat_choice(repeat, index_value):
@@ -31,10 +30,7 @@ def repeat_choice(repeat, index_value):
     Takes the repeat value and the index value to compare and if the game is already on a repetition, it returns
     the previous index value. Else, it returns a new one.
     """
-    if repeat == 1:
-        return index_value
-    else:
-        return random_contestant()
+    return index_value if repeat == 1 else random_contestant()
 
 
 def check_choice(choice, score, a, b):
@@ -94,12 +90,8 @@ def game(score, repeat, index_value):
     index_a = repeat_choice(repeat, index_value)
     index_b = repeat_choice(repeat, index_value)
 
-    while True:
-        if index_a == index_b:
-            index_b = random_contestant()
-            continue
-        else:
-            break
+    while index_a == index_b:
+        index_b = random_contestant()
 
     print(f'Contestant A\n\n{data[index_a][name].upper()}, {data[index_a][desc]}, from {data[index_a][country]}')
     print(vs)
@@ -107,12 +99,8 @@ def game(score, repeat, index_value):
 
     choice = input('\nWho has more followers? Type "A" or "B": ').lower()
 
-    while True:
-        if choice in ("a", "b"):
-            break
-        else:
-            choice = input('\nInvalid input. Choose "A" or "B": ').lower()
-            continue
+    while choice not in ("a", "b"):
+        choice = input('\nInvalid input. Choose "A" or "B": ').lower()
 
     check_choice(choice, score, index_a, index_b)
 
