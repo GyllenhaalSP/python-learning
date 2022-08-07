@@ -8,7 +8,7 @@ from art import header
 
 def clear():
     """
-    Clear the console window
+    Clear the console window.
     """
     if os.name == 'nt':
         _ = os.system('cls')
@@ -16,28 +16,27 @@ def clear():
         _ = os.system('clear')
 
 
-def deal_card(num_of_cards, lst):
+def deal_card(num_of_cards, hand_list):
     """
     Returns wrapped inside an already existing list the passed number of random cards in the deck.
     """
-    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    cards = (11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10)
     for _ in range(num_of_cards):
-        lst.append(cards[random.randint(0, len(cards) - 1)])
-    return lst
+        hand_list.append(cards[random.randint(0, len(cards) - 1)])
+    return hand_list
 
 
-def score(hand):
+def score(hand_list):
     """
     Take a list of cards and return the calculated total score of the cards.
     """
-    score_sum = sum(hand)
-    if score_sum == 21 and len(hand) == 2:
+    score_sum = sum(hand_list)
+    if score_sum == 21 and len(hand_list) == 2:
         return 0
-    if 11 in hand and score_sum > 21:
-        hand.remove(11)
-        hand.append(1)
-        score_sum = sum(hand)
-    return score_sum
+    if 11 in hand_list and score_sum > 21:
+        hand_list.remove(11)
+        hand_list.append(1)
+    return sum(hand_list)
 
 
 def compare(user_score, computer_score):
