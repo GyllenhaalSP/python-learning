@@ -7,32 +7,32 @@ from art import header
 
 def clear():
     """
-    Clear the console window
+    Clear the console window.
     """
     if os.name == 'nt':
         _ = os.system('cls')
+    elif os.name == 'posix':
+        _ = os.system('clear')
 
 
-def bidders_info_dict(data, price):
+def bidders_info_dict(bidder_name, bidder_price):
     """
     Updates dictionary populating it with the data the user inputs.
     """
-    new = {data: price}
-    info.update(new)
+    data_dict.update({bidder_name: bidder_price})
 
 
 def find_highest(info_dict):
     """
     Find and returns the passed dictionary's highest value by key.
     """
-    highest = max(info_dict, key=info_dict.get)
-    return highest
+    return max(info_dict, key=info_dict.get)
 
 
 print(header)
-print(f' Welcome to the Secret Auction Program '.center(108, '*'), '\n')
+print(' Welcome to the Secret Auction Program '.center(108, '*'), '\n')
 
-info = {}
+data_dict = {}
 
 while True:
     name = input('What is your name?: ')
@@ -46,6 +46,6 @@ while True:
         clear()
         break
 
-highest_bidder = find_highest(info)
+highest_bidder = find_highest(data_dict)
 
-print(f'{highest_bidder} is the highest bidder with {info[highest_bidder]} €!')
+print(f'{highest_bidder} is the highest bidder with {data_dict[highest_bidder]} €!')
