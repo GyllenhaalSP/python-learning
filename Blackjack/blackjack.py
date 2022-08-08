@@ -91,7 +91,7 @@ def game():
         user_hand = deal_card(1, user_hand)
         user_score = score(user_hand)
 
-    computer_score, computer_hand = computer_hand_deal(computer_hand, computer_score)
+    computer_hand, computer_score = computer_hand_deal(computer_hand, computer_score)
 
     print(f'\nYour final hand: {user_hand}, final score {user_score}')
     print(f'Computer\'s final hand: {computer_hand}, final score {computer_score}\n')

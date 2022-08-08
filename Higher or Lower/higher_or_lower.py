@@ -9,17 +9,14 @@ from game_data import data
 
 def clear():
     """
-    Clear the console window
+    Clear the console window.
     """
-    if os.name == 'nt':
-        _ = os.system('cls')
-    elif os.name == 'posix':
-        _ = os.system('clear')
+    os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
 
 
 def random_contestant():
     """
-    Chooses randomly a contestant.
+    Chooses a contestant randomly.
     """
     contestant = random.choice(data)
     return data.index(contestant)
@@ -27,8 +24,7 @@ def random_contestant():
 
 def repeat_choice(repeat, index_value):
     """
-    Takes the repeat value and the index value to compare and if the game is already on a repetition, it returns
-    the previous index value. Else, it returns a new one.
+    Returns the previous index value if the game is already a repetition or else, it returns a new one.
     """
     return index_value if repeat == 1 else random_contestant()
 
