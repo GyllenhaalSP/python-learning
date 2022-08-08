@@ -8,10 +8,9 @@ from art import header, demon, hammer, bathroom, front_door
 
 def clear():
     """
-    Clear the console window
+    Clear the console window.
     """
-    if os.name == 'nt':
-        _ = os.system('cls')
+    _ = os.system('cls') if os.name == 'nt' else _ = os.system('clear')
 
 
 while True:
