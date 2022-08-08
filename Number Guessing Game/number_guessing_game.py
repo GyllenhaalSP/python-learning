@@ -11,10 +11,7 @@ def clear():
     """
     Clear the console window.
     """
-    if os.name == 'nt':
-        _ = os.system('cls')
-    elif os.name == 'posix':
-        _ = os.system('clear')
+    os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
 
 
 def lives(amount):
@@ -27,26 +24,28 @@ def lives(amount):
     return hearts
 
 
-def set_difficulty(difficulty):
+def validate_difficulty(difficulty):
     """
-    Checks difficulty choice and returns counter. If input is invalid it keeps asking for valid input.
+    Validate difficulty choice and triggers the set_difficulty function.
+    If input is invalid it keeps asking for valid input.
     """
     while True:
         if difficulty in ('easy', 'e'):
-            print('\nDifficulty set to EASY.')
-            counter = 10
-            return counter
+            return set_difficulty('\nDifficulty set to EASY.', 10)
         elif difficulty in ('hard', 'h'):
-            print('\nDifficulty set to HARD.')
-            counter = 5
-            return counter
+            return set_difficulty('\nDifficulty set to HARD.', 5)
         elif difficulty in ('extra', 'extra-hard', 'extra hard', 'ex'):
-            print('\nDifficulty set to EXTRA-HARD.')
-            counter = 3
-            return counter
-        else:
-            difficulty = input('Invalid input. Please type "easy", "hard" or "extra-hard": ').lower()
-            continue
+            return set_difficulty('\nDifficulty set to EXTRA-HARD.', 3)
+        difficulty = input('Invalid input. Please type "easy", "hard" or "extra-hard": ').lower()
+        continue
+
+
+def set_difficulty(diff_text, diff_lvl):
+    """
+    Return difficulty level and print difficulty text.
+    """
+    print(diff_text)
+    return diff_lvl
 
 
 def validate_digit(digit):
@@ -55,11 +54,9 @@ def validate_digit(digit):
     """
     while True:
         if str.isdecimal(digit):
-            int_digit = int(digit)
-            return int_digit
-        else:
-            digit = input('Invalid input. Please make a numeric guess: ')
-            continue
+            return int(digit)
+        digit = input('Invalid input. Please make a numeric guess: ')
+        continue
 
 
 def replay(option):
@@ -105,7 +102,7 @@ def extra_hard_diff(difficulty):
 
 def game():
     """
-       Wrapped code in function for recursion.
+    Main function for recursion.
     """
     clear()
     print(header)
@@ -116,7 +113,7 @@ def game():
     print('Computer says:\n'
           '         I\'m thinking (do we think?) of a number between 1 and 100.\n')
     difficulty = input('Choose a difficulty. Type "easy", "hard" or "extra-hard": ').lower()
-    counter = set_difficulty(difficulty)
+    counter = validate_difficulty(difficulty)
     num = random.randint(0, 100)
 
     while True:
