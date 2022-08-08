@@ -10,7 +10,7 @@ def clear():
     """
     Clear the console window.
     """
-    _ = os.system('cls') if os.name == 'nt' else _ = os.system('clear')
+    os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
 
 
 while True:
