@@ -3,18 +3,18 @@ Hangman game by GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
 """
 import random
 import os
+
 from art import header_en, HANGMANPICS
 
 
 def clear():
     """
-    Clear the console window
+    Clear the console window.
     """
-    if os.name == 'nt':
-        _ = os.system('cls')
+    os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
 
 
-def get_word(archive):
+def get_word(archive: str) -> str:
     """
     Retrieves a word from the word_list.txt file where all the words eligible for the game are stored.
     """
@@ -39,25 +39,17 @@ print(f'Debug statement: {chosen_word}')
 
 # Create blanks
 guess = ''
-display = []
 repeats = []
 
-for letter in chosen_word:
-    display.append('_')
-
+display = ['_' for _ in chosen_word]
 print(f'\n{" ".join(display)}\n')
 
 while '_' in display:
 
     guess = input('Guess a letter, please: ').lower()
 
-    while True:
-        if not guess:
-            guess = input('Nothing was inputted, please input a letter: ').lower()
-            continue
-        else:
-            break
-
+    while not guess:
+        guess = input('Nothing was inputted, please input a letter: ').lower()
     clear()
 
     while True:
@@ -69,8 +61,7 @@ while '_' in display:
             print(f'You have already guessed {guess}\n')
             guess = input('Guess another letter, please: ').lower()
             continue
-        if guess not in repeats:
-            break
+        break
 
     # Check guessed letter
     for count, letters in enumerate(chosen_word):
