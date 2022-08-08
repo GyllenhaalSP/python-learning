@@ -3,7 +3,6 @@ Hangman game by GyllenhaalSP 2022 @ https://github.com/GyllenhaalSP.
 """
 import random
 import os
-
 from art import header_en, HANGMANPICS
 
 
