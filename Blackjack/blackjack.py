@@ -13,28 +13,28 @@ def clear():
     os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
 
 
-def deal_card(num_of_cards: int, hand_list: list) -> list:
+def deal_card(num_of_cards: int, hand: list) -> list:
     """
     Returns, wrapped inside an already existing list, the passed number of random cards in the deck.
     """
     cards = (11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10)
-    hand_list.extend(cards[random.randint(0, len(cards) - 1)] for _ in range(num_of_cards))
+    hand.extend(cards[random.randint(0, len(cards) - 1)] for _ in range(num_of_cards))
 
-    return hand_list
+    return hand
 
 
-def score(hand_list: list) -> int:
+def score(hand: list) -> int:
     """
     Take a list of cards and return the total score of the cards. If the user has blackjack in the first
     hand, it returns 0 to flag blackjack.
     """
-    score_sum = sum(hand_list)
-    if score_sum == 21 and len(hand_list) == 2:
+    score_sum = sum(hand)
+    if score_sum == 21 and len(hand) == 2:
         return 0
-    if 11 in hand_list and score_sum > 21:
-        hand_list.remove(11)
-        hand_list.append(1)
-    return sum(hand_list)
+    if 11 in hand and score_sum > 21:
+        hand.remove(11)
+        hand.append(1)
+    return sum(hand)
 
 
 def computer_hand_deal(computer_hand: list, computer_score: int) -> (list, int):
