@@ -48,12 +48,10 @@ def guess_checker(guess: str, chosen_word: str,  displayed: list) -> list:
 
 def repeats_checker(guess: str, repeats: list, lives: int, chosen_word: str) -> (str, list, int):
     """
-    Checks repeated words and updates all values dependent on guess being a repeated word or not.
+    Checks if the user guess is repeated and updates all values dependent on guess being a repeated char or not.
     """
     repeats.append(guess)
-    if guess in chosen_word:
-        ''
-    else:
+    if guess not in chosen_word:
         print(f'\n{guess} is not in the word.')
         lives -= 1
     return guess, repeats, lives
