@@ -6,6 +6,8 @@ import os
 from art import header, vs
 from game_data import data
 
+NAME, FOLL_COUNT, DESC, COUNTRY = ('name', 'follower_count', 'description', 'country')
+
 
 def clear():
     """
@@ -14,7 +16,15 @@ def clear():
     os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
 
 
-def random_contestant():
+def header_printer():
+    """
+    Prints the header
+    """
+    clear()
+    print(header)
+
+
+def random_contestant() -> int:
     """
     Chooses a contestant randomly.
     """
@@ -22,63 +32,61 @@ def random_contestant():
     return data.index(contestant)
 
 
-def repeat_choice(repeat, index_value):
+def repeat_choice(repeat: int, index_value: int | None) -> int | None:
     """
     Returns the previous index value if the game is already a repetition or else, it returns a new one.
     """
     return index_value if repeat == 1 else random_contestant()
 
 
-def check_choice(choice, score, a, b):
+def losing(score: int):
+    """
+    Unifies the game repeating options.
+    """
+    clear()
+    print(f'You lose! Your score was {score}')
+    repeat = input('Do you want to play again? Type "y" or "n": ').lower()
+    while True:
+        if repeat in {'yes', 'y'}:
+            game(0, 0, None)
+        elif repeat in {'no', 'n'}:
+            quit()
+        repeat = input('\nInvalid input. Type "y" to play again or "n" to exit: ').lower()
+
+
+def check_choice(choice: str, score: int, a: int, b: int):
     """
     Checks user choice, passing the indexes in order to compare them.
     """
-    def losing():
-        """
-        Unifies the else statements.
-        """
-        clear()
-        print(f'You lose! Your score was {score}')
-        repeat = input('Do you want to play again? Type "y" or "n": ')
-        while True:
-            if repeat in ('yes', 'y'):
-                game(0, 0, None)
-            elif repeat in ('no', 'n'):
-                quit()
-            else:
-                repeat = input('\nInvalid input. Type "y" to play again or "n" to exit: ')
-                continue
-
-    if data[a][foll_count] == data[b][foll_count]:
-        if choice in ('a', 'b'):
-            print('They are equal!')
-            score += 0
-            game(score, 1, None)
-    elif data[a][foll_count] > data[b][foll_count]:
+    if data[a][FOLL_COUNT] == data[b][FOLL_COUNT]:
+        if choice in {'a', 'b'}:
+            choice_router('They are equal!', 0, score, None)
+    elif data[a][FOLL_COUNT] > data[b][FOLL_COUNT]:
         if choice in 'a':
-            print('Great job!')
-            score += 1
-            game(score, 1, b)
-        else:
-            losing()
-
-    elif data[b][foll_count] > data[a][foll_count]:
+            choice_router('Great job!', 1, score, b)
+        losing(score)
+    elif data[b][FOLL_COUNT] > data[a][FOLL_COUNT]:
         if choice in 'b':
-            print('Great job!')
-            score += 1
-            game(score, 1, a)
-        else:
-            losing()
+            choice_router('Great job!', 1, score, a)
+        losing(score)
 
 
-def game(score, repeat, index_value):
+def choice_router(message: str, repeat: int, score: int, index_value: int | None):
+    """
+    Routes the check_choice options.
+    """
+    print(message)
+    score += repeat
+    game(score, 1, index_value)
+
+
+def game(score: int, repeat: int, index_value: int | None):
     """
     Takes the score (initial = 0), the repeat status (0 = first occurrence, 1 = repeated game) and the index value
     of the previous "lower" index (the one that loses in the comparison). Then it keeps a recursive loop inside itself
     to keep the game going, passing the same arguments but updated.
     """
-    clear()
-    print(header)
+    header_printer()
 
     if score > 0:
         print(f'Well done! Your current score is {score}.\n')
@@ -89,9 +97,9 @@ def game(score, repeat, index_value):
     while index_a == index_b:
         index_b = random_contestant()
 
-    print(f'Contestant A\n\n{data[index_a][name].upper()}, {data[index_a][desc]}, from {data[index_a][country]}')
+    print(f'Contestant A\n\n{data[index_a][NAME].upper()}, {data[index_a][DESC]}, from {data[index_a][COUNTRY]}')
     print(vs)
-    print(f'{data[index_b][name].upper()}, {data[index_b][desc]}, from {data[index_b][country]}\n\nContestant B')
+    print(f'{data[index_b][NAME].upper()}, {data[index_b][DESC]}, from {data[index_b][COUNTRY]}\n\nContestant B')
 
     choice = input('\nWho has more followers? Type "A" or "B": ').lower()
 
@@ -101,6 +109,6 @@ def game(score, repeat, index_value):
     check_choice(choice, score, index_a, index_b)
 
 
-name, foll_count, desc, country = ('name', 'follower_count', 'description', 'country')
+if __name__ == '__main__':
 
-game(0, 0, None)
+    game(0, 0, None)
