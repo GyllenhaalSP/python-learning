@@ -6,6 +6,9 @@ PENNY = 0.01
 NICKEL = 0.05
 DIME = 0.10
 QUARTER = 0.25
+NEMI = '\nSorry, no money inserted.\n'
+NEMIR = 'Sorry, not enough money inserted. Money refunded.\n'
+NOTISCHANGE = f'\nNo change.\n'
 
 MENU = {
     "espresso": {
@@ -41,31 +44,32 @@ resources = {
 }
 
 
-def check_resources(user_choice):
+def check_resources(user_choice: str) -> bool:
     """
     Checks the machine stock against the user order.
     """
-    if user_choice in ('latte', 'l'):
-        if resources['water'] < 200 or resources['milk'] < 150 or resources['coffee'] < 24:
-            print('\nSorry, not enough resources.\n')
-            return False
-        else:
+    if user_choice in {'latte', 'l'}:
+        return check_milky_beverages(200, 150)
+    if user_choice in {'cappuccino', 'c'}:
+        return check_milky_beverages(250, 100)
+    elif user_choice in {'espresso', 'e'}:
+        if resources['water'] >= 50 and resources['coffee'] >= 18:
             return True
-    if user_choice in ('cappuccino', 'c'):
-        if resources['water'] < 250 or resources['milk'] < 100 or resources['coffee'] < 24:
-            print('\nSorry, not enough resources.\n')
-            return False
-        else:
-            return True
-    elif user_choice in ('espresso', 'e'):
-        if resources['water'] < 50 or resources['coffee'] < 18:
-            print('\nSorry, not enough resources.\n')
-            return False
-        else:
-            return True
+        print('\nSorry, not enough resources.\n')
+        return False
 
 
-def coin_processing():
+def check_milky_beverages(water: int, milk: int) -> bool:
+    """
+    Checks the milky beverages resources.
+    """
+    if resources['water'] >= water and resources['milk'] >= milk and resources['coffee'] >= 24:
+        return True
+    print('\nSorry, not enough resources.\n')
+    return False
+
+
+def coin_processing() -> int:
     """
     Ask for the coins and return the total introduced.
     """
@@ -77,92 +81,85 @@ def coin_processing():
     return total
 
 
-def statistics_final_balance(user_choice, price_paid):
+def statistics_final_balance(user_choice: str, price_paid: int | float):
     """
     Deduces successfully spent resources from choice and updates money won with transaction.
     """
-    if user_choice in ('espresso', 'e'):
-        resources['money'] += price_paid
-        resources['water'] -= MENU['espresso']['ingredients']['water']
-        resources['coffee'] -= MENU['espresso']['ingredients']['coffee']
-    elif user_choice in ('latte', 'l'):
-        resources['money'] += price_paid
-        resources['water'] -= MENU['latte']['ingredients']['water']
-        resources['milk'] -= MENU['latte']['ingredients']['milk']
+    if user_choice in {'espresso', 'e'}:
+        resource_updater(price_paid, 'espresso', 'coffee')
+    elif user_choice in {'latte', 'l'}:
+        resource_updater(price_paid, 'latte', 'milk')
         resources['coffee'] -= MENU['latte']['ingredients']['coffee']
-    elif user_choice in ('cappuccino', 'c'):
-        resources['money'] += price_paid
-        resources['water'] -= MENU['cappuccino']['ingredients']['water']
-        resources['milk'] -= MENU['cappuccino']['ingredients']['milk']
+    elif user_choice in {'cappuccino', 'c'}:
+        resource_updater(price_paid, 'cappuccino', 'milk')
         resources['coffee'] -= MENU['cappuccino']['ingredients']['coffee']
+
+
+def resource_updater(price_paid: int | float, beverage: str, resource: str):
+    """
+    Updates the machine resources and money.
+    """
+    resources['money'] += price_paid
+    resources['water'] -= MENU[beverage]['ingredients']['water']
+    resources[resource] -= MENU[beverage]['ingredients'][resource]
 
 
 while True:
     choice = input('What would you like?\n(espresso/latte/cappuccino) ')
-
+    if not choice:
+        continue
     if choice in ('espresso', 'e'):
-        if check_resources(choice):
-            money_inserted = coin_processing()
-            price = MENU['espresso']['cost']
-            if price > money_inserted:
-                if money_inserted <= 0:
-                    print('\nSorry, no money inserted.\n')
-                else:
-                    print('Sorry, not enough money inserted. Money refunded.\n')
-                continue
-            elif price <= money_inserted:
-                change = money_inserted - price
-                if change > 0:
-                    print(f'\nHere is ${change:0.2f} in change.\n')
-                else:
-                    print(f'\nNo change.\n')
-                statistics_final_balance(choice, price)
-                print('Here is your espresso. Enjoy!\n')
-                continue
-        else:
+        if not check_resources(choice):
             continue
+        money_inserted = coin_processing()
+        price = MENU['espresso']['cost']
+        if price > money_inserted:
+            if money_inserted <= 0:
+                print(NEMI)
+            else:
+                print(NEMIR)
+        else:
+            change = money_inserted - price
+            if change > 0:
+                print(f'\nHere is ${change:0.2f} in change.\n')
+            else:
+                print(NOTISCHANGE)
+            statistics_final_balance(choice, price)
+            print('Here is your espresso. Enjoy!\n')
     elif choice in ('latte', 'l'):
         if check_resources(choice):
             money_inserted = coin_processing()
             price = MENU['latte']['cost']
             if price > money_inserted:
                 if money_inserted <= 0:
-                    print('\nSorry, no money inserted.\n')
+                    print(NEMI)
                 else:
-                    print('Sorry, not enough money inserted. Money refunded.\n')
-                continue
-            elif price <= money_inserted:
+                    print(NEMIR)
+            else:
                 change = money_inserted - price
                 if change > 0:
                     print(f'\nHere is ${change:0.2f} in change.\n')
                 else:
-                    print(f'\nNo change.\n')
+                    print(NOTISCHANGE)
                 statistics_final_balance(choice, price)
                 print('Here is your latte. Enjoy!\n')
-                continue
-        else:
-            continue
     elif choice in ('cappuccino', 'c'):
         if check_resources(choice):
             money_inserted = coin_processing()
             price = MENU['cappuccino']['cost']
             if price > money_inserted:
                 if money_inserted <= 0:
-                    print('\nSorry, no money inserted.\n')
+                    print(NEMI)
                 else:
-                    print('Sorry, not enough money inserted. Money refunded.\n')
-                continue
-            elif price <= money_inserted:
+                    print(NEMIR)
+            else:
                 change = money_inserted - price
                 if change > 0:
                     print(f'\nHere is ${change:0.2f} in change.\n')
                 else:
-                    print(f'\nNo change.\n')
+                    print(NOTISCHANGE)
                 statistics_final_balance(choice, price)
                 print('Here is your cappuccino. Enjoy!\n')
-                continue
-        else:
-            continue
     elif choice in ('report', 'r'):
         print("")
         for key, value in resources.items():
@@ -173,6 +170,5 @@ while True:
             elif key in 'money_profit':
                 print(f'{key.capitalize()}: ${value}')
         print("")
-        continue
     elif choice in 'off':
         quit()
