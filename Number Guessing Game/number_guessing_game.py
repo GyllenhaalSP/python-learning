@@ -36,12 +36,12 @@ def validate_difficulty(difficulty):
             return set_difficulty('\nDifficulty set to HARD.', 5)
         elif difficulty in ('extra', 'extra-hard', 'extra hard', 'ex'):
             return set_difficulty('\nDifficulty set to EXTRA-HARD.', 3)
-        difficulty = input('Invalid input. Please type "easy", "hard" or "extra-hard": ').lower()
+        difficulty = input(f'Invalid input {difficulty}. Please type "easy", "hard" or "extra-hard": ').lower()
 
 
 def set_difficulty(diff_text, diff_lvl):
     """
-    Return difficulty level and print difficulty text.
+    Return difficulty level and print difficulty associated text.
     """
     print(diff_text)
     return diff_lvl
@@ -54,26 +54,23 @@ def validate_digit(digit):
     while True:
         if str.isdecimal(digit):
             return int(digit)
-        digit = input('Invalid input. Please make a numeric guess: ')
+        digit = input(f'Invalid input {digit}. Please make a numeric guess: ')
 
 
-def replay(option):
+def replay():
     """
     Checks user answer and routes the replay options. Keeps asking for correct input.
     """
-    if option in ('y', 'yes'):
-        clear()
-        game()
-    elif option in ('n', 'no'):
-        quit()
-    else:
-        while True:
-            option = input('Invalid input. "y" to play again or "n" to exit: ')
-            if option in ('y', 'yes'):
+    while True:
+        choice = input('\t\tDo you want to play again? "Y" or "N": ').lower()
+        match choice:
+            case 'y' | 'yes':
                 clear()
                 game()
-            elif option in ('n', 'no'):
+            case 'n' | 'no':
                 quit()
+            case _:
+                print(f'\nInvalid option: {choice}. "Y" to play again or "N" to exit:')
 
 
 def hard_diff(difficulty, play):
@@ -95,21 +92,27 @@ def extra_hard_diff(difficulty):
         clear()
 
 
-def game():
+def header_and_setup():
     """
-    Main function for recursion.
+    Prints the header and sets the variables of the game.
     """
     clear()
     print(header)
     print('Welcome to the Number Guessing Game!\n')
-    print(f'EASY         mode gives you {heart * 10} lives. \n'
-          f'HARD         mode gives you {heart * 5} lives and wipes the previous screen.\n'
-          f'EXTRA HARD   mode gives you {heart * 3} lives and wipes your previous guesses.\n')
+    print(f'EASY mode gives you {heart * 10} lives. \n'
+          f'HARD mode gives you {heart * 5} lives and wipes the previous screen.\n'
+          f'EXTRA HARD mode gives you {heart * 3} lives and wipes your previous guesses.\n')
     print('Computer says:\n'
           '         I\'m thinking (do we think?) of a number between 1 and 100.\n')
     difficulty = input('Choose a difficulty. Type "easy", "hard" or "extra-hard": ').lower()
-    counter = validate_difficulty(difficulty)
-    num = random.randint(0, 100)
+    return validate_difficulty(difficulty), difficulty, random.randint(0, 100)
+
+
+def game():
+    """
+    Wrapped code in function for recursion.
+    """
+    counter, difficulty, num = header_and_setup()
 
     while True:
         extra_hard_diff(difficulty)
@@ -121,9 +124,8 @@ def game():
         if counter < 2:
             print(f'\nYou ran out of lives! {broken}')
             print('I\'m sorry, you lose!')
-            print(f'The number was {num}\n')
-            again = input('Do you want to play again? "y" to play or "n" to exit: ')
-            replay(again)
+            print(f'The number was {num}.\n')
+            replay()
 
         elif play > num:
             print('Too high.')
@@ -142,8 +144,8 @@ def game():
         elif play == num:
             print('Congrats! You got it!')
             print(f'You finished with {lives(counter)} lives left!\n')
-            again = input('Do you want to play again? "y" to play or "n" to exit: ')
-            replay(again)
+            replay()
 
 
-game()
+if __name__ == '__main__':
+    game()
