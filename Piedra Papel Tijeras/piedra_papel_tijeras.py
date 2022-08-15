@@ -3,7 +3,7 @@ Piedra, Papel, Tijeras game by GyllenhaalSP 2022 @ https://github.com/Gyllenhaal
 """
 import random
 import time
-from art import *
+from art import header, piedra, papel, tijeras, versus
 
 print(header)
 
