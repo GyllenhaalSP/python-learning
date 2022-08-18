@@ -10,17 +10,18 @@ cm = CoffeeMaker()
 mm = MoneyMachine()
 
 while True:
-    choice = input(f'What would you like? {menu.get_items()} ')
-    if choice in 'off':
-        quit()
-    elif choice in ('report', 'r'):
-        print('')
-        cm.report()
-        mm.report()
-        print('')
-    else:
-        order = menu.find_drink(choice)
-        if cm.is_resource_sufficient(order):
-            print(f'\nIt\'s ${order.cost}.')
-            if mm.make_payment(order.cost):
-                cm.make_coffee(order)
+    choice = input(f'What would you like? ({menu.get_items()})')
+    match choice:
+        case 'off':
+            quit()
+        case 'report' | 'r':
+            print('')
+            cm.report()
+            mm.report()
+            print('')
+        case _:
+            order = menu.find_drink(choice)
+            if cm.is_resource_sufficient(order):
+                print(f'\nIt\'s ${order.cost}.\n')
+                if mm.make_payment(order.cost):
+                    cm.make_coffee(order)
