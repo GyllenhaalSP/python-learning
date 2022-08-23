@@ -28,8 +28,7 @@ def score(hand: list) -> int:
     Take a list of cards and return the total score of the cards. If the user has blackjack in the first
     hand, it returns 0 to flag blackjack.
     """
-    score_sum = sum(hand)
-    if score_sum == 21 and len(hand) == 2:
+    if (score_sum := sum(hand)) == 21 and len(hand) == 2:
         return 0
     if 11 in hand and score_sum > 21:
         hand.remove(11)
@@ -67,16 +66,29 @@ def compare(user_score: int, computer_score: int) -> str:
         return 'You lose!\n'
 
 
+def replay():
+    """
+    Triggers the replay dialog.
+    """
+    while choice := input('   Do you want to play again? "Y" or "N": ').lower():
+        match choice:
+            case 'y' | 'yes':
+                clear()
+                game()
+            case 'n' | 'no':
+                quit()
+            case _:
+                print(f'\nInvalid option: {choice}')
+
+
 def game():
     """
     Main function for recursion.
     """
     print(header)
 
-    user_hand = []
-    deal_card(2, user_hand)
-    computer_hand = []
-    deal_card(2, computer_hand)
+    deal_card(2, user_hand := [])
+    deal_card(2, computer_hand := [])
     computer_score = score(computer_hand)
     user_score = score(user_hand)
 
@@ -85,8 +97,7 @@ def game():
         print(f'Computer\'s first card: {computer_hand[0]}\n')
         if user_score == 0 or computer_score == 0 or user_score > 21:
             break
-        user_wants_deal = input('   Type "deal" to get another card or type "pass" to pass: ')
-        if user_wants_deal not in ('deal', 'd'):
+        if input('   Type "deal" to get another card or type "pass" to pass: ') not in ('deal', 'd'):
             break
         user_hand = deal_card(1, user_hand)
         user_score = score(user_hand)
@@ -97,10 +108,7 @@ def game():
     print(f'Computer\'s final hand: {computer_hand}, final score {computer_score}\n')
     print(compare(user_score, computer_score))
 
-    while input('   Do you want to play again? "Y" or "N": ') in ('yes', 'y'):
-        clear()
-        game()
-    quit()
+    replay()
 
 
 if __name__ == '__main__':
