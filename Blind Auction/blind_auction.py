@@ -50,24 +50,20 @@ while True:
         if bid.isdigit():
             break
         print(f'Introduce a numeric bid. Not {bid}.')
-    bid = int(bid)
-    bidders_info_dict(name, bid)
-    while True:
-        more_bidders = input('Are there any other bidders? Type "yes" or "no".\n')
-        if more_bidders in ('yes', 'y', 'no', 'n'):
-            break
-        print(f'Invalid input: {more_bidders}')
+    bidders_info_dict(name, int(bid))
 
-    if more_bidders in ('yes', 'y'):
+    while (more_bidders := input('Are there any other bidders? Type "yes" or "no".\n')) not in {'yes', 'y', 'no', 'n'}:
+        print(f'Invalid input: {more_bidders}\n')
+
+    if more_bidders in {'yes', 'y'}:
         clear()
         continue
-    if more_bidders in ('no', 'n'):
+    if more_bidders in {'no', 'n'}:
         clear()
         break
 
-highest_bidder = find_highest(data_dict)
 print_header()
-if len(highest_bidder) == 1:
+if len(highest_bidder := find_highest(data_dict)) == 1:
     print(f'{"".join(highest_bidder)} is the highest bidder with {data_dict[highest_bidder[0]]}€!')
 else:
     print(f'{", ".join(list(highest_bidder[:-1]))} and {highest_bidder[-1]} are the highest bidders with '
