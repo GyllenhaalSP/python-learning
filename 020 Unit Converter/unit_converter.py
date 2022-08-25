@@ -1,7 +1,6 @@
 """
  By GyllenhaalSP ago. 2022 @ https://github.com/GyllenhaalSP.
 """
-
 from tkinter import Tk, Label, Button, Entry, mainloop
 
 FONT = ('Courier', 10, 'normal')
