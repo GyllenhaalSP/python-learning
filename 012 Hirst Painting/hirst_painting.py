@@ -2,12 +2,13 @@
  By GyllenhaalSP jul. 2022 @ https://github.com/GyllenhaalSP.
 """
 import turtle as timmy
+import itertools
 import random
 
 INITIAL_X, INITIAL_Y = (-300, -300)
 DOT_DISTANCE = 60
 N_ROWS = 10
-N_COLS = 20
+N_COLS = 10
 
 tim = timmy.Turtle()
 screen = timmy.Screen()
@@ -34,11 +35,10 @@ def pick_random_color():
 
 
 tim.pu()
-for row in range(N_ROWS):
-    for col in range(N_COLS):
-        tim.setpos(INITIAL_X + col * DOT_DISTANCE, INITIAL_Y + row * DOT_DISTANCE)
-        tim.dot(30, pick_random_color())
+for row, col in itertools.product(range(N_ROWS), range(N_COLS)):
+    tim.setpos(INITIAL_X + col * DOT_DISTANCE, INITIAL_Y + row * DOT_DISTANCE)
+    tim.dot(30, pick_random_color())
 
 tim.ht()
 
-screen.exitonclick()
+screen.mainloop()
