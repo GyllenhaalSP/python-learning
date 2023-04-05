@@ -10,7 +10,7 @@ def clear():
     """
     Clear the console window.
     """
-    os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n'*100)
+    os.system('cls||clear') if os.name in ('nt', 'posix') else print('\n' * 100)
 
 
 def deal_card(num_of_cards: int, hand: list) -> list:
@@ -29,7 +29,7 @@ def score(hand: list) -> int:
     hand, it returns 0 to flag blackjack.
     """
     if (score_sum := sum(hand)) == 21 and len(hand) == 2:
-        return 0
+        return 21
     if 11 in hand and score_sum > 21:
         hand.remove(11)
         hand.append(1)
@@ -54,7 +54,7 @@ def compare(user_score: int, computer_score: int) -> str:
         return 'It\'s a draw!\n'
     elif computer_score == 21:
         return 'You lose! Computer has Blackjack!\n'
-    elif user_score == 0:
+    elif user_score == 21:
         return 'You win! You have Blackjack!\n'
     elif user_score > 21:
         return 'You went over. You lose!\n'
@@ -102,6 +102,11 @@ def game():
         user_hand = deal_card(1, user_hand)
         user_score = score(user_hand)
 
+    if user_score == 0:
+        user_score = 21
+    elif computer_score == 0:
+        computer_score = 21
+
     computer_hand, computer_score = computer_hand_deal(computer_hand, computer_score)
 
     print(f'\nYour final hand: {user_hand}, final score {user_score}')
@@ -112,6 +117,5 @@ def game():
 
 
 if __name__ == '__main__':
-
     clear()
     game()
