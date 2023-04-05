@@ -12,7 +12,7 @@ N_COLS = 10
 
 tim = timmy.Turtle()
 screen = timmy.Screen()
-screen.setup(2200, 1350)
+screen.setup(1024, 720)
 screen.title('Hirst Painting')
 tim.shape("turtle")
 tim.color("firebrick1")
