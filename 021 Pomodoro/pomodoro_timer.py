@@ -9,9 +9,9 @@ RED = "#e7305b"
 GREEN = "#cfe8a9"
 YELLOW = "#fffde3"
 FONT_NAME = "Courier"
-WORK_MIN = 0.1
-SHORT_BREAK_MIN = 0.1
-LONG_BREAK_MIN = 0.1
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 25
 CHECKMARK = '\U0001F5F8'
 repetitions = 0
 timer = None
@@ -59,7 +59,8 @@ def countdown(count):
     Acts as the countdown timer.
     """
     count_min = floor(count / 60)
-    count_sec = count % 60
+    count_sec = int(count % 60)
+    print(count_sec)
     canvas.itemconfig(timer_text, text=f'{"0" if count_min < 10 else ""}{count_min}:'
                                        f'{"0" if count_sec < 10 else ""}{count_sec if count_sec != 0 else "0"}')
 
